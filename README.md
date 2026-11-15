@@ -19,9 +19,9 @@ plays the make.fun tiny-chess-01 gauntlet through the env server.
 - Deterministic: fixed node budget (100,000 nodes/move), no wall
   clock, no unseeded randomness. Repetition and game-history draws
   handled.
-- `main.py` is a zlib-compressed payload (base85) with a tiny
-  unpacker; the unpacked source is the engine above. Total size
-  4,015 bytes (limit 4,096).
+- `main.py` is an LZMA-compressed payload packed with makefun
+  compress from the golfed source; the unpacked source is the
+  engine above. Total size 3,193 bytes (limit 4,096).
 
 ## Local results
 
@@ -34,5 +34,5 @@ plays the make.fun tiny-chess-01 gauntlet through the env server.
 
 ## Files
 
-- `main.py` — the engine (4,015 bytes).
+- `main.py` — the engine (3,193 bytes).
 - `LICENSE` — MIT.
