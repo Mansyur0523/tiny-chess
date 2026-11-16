@@ -1,38 +1,23 @@
+# Tiny Chess — tiny-chess-01
+
 [![make.fun · tiny-chess-01](https://make.fun/badge/tiny-chess-01.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
 [![rank](https://make.fun/badge/tiny-chess-01/Mansyur0523/tiny-chess/rank.svg)](https://make.fun/bounty/tiny-chess-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
 [![reward](https://make.fun/badge/tiny-chess-01/Mansyur0523/tiny-chess/reward.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
 
-# tiny-chess-01 — 4 KB chess engine
+A chess engine in 4 KB of Python. `main.py` (3.859 bytes) is the whole
+engine: a 0x88 board, pseudo-legal move generation with king-safety
+filtering, material + piece-square evaluation with a separate endgame king
+table and bishop-pair bonus, and an iterative-deepening alpha-beta search
+with a transposition table, killer moves, history heuristic, MVV-LVA
+ordering, quiescence search (captures and promotions, all evasions when in
+check) with delta pruning, null-move pruning (R=2) and check extensions.
+It searches a fixed 200.000 nodes per move — no clock, no unseeded
+randomness — so every trial replays move for move. It plays the gauntlet
+through the env at `MAKEFUN_ENV_URL` (`/game`, `/move`) and handles
+repetition draws from the game history.
 
-A single-file Python chess engine (stdlib only, no model calls) that
-plays the make.fun tiny-chess-01 gauntlet through the env server.
+Local practice results (kit `grade-local` trial script, 6 games each):
 
-## Engine
-
-- 0x88 board, pseudo-legal move generation + king-safety filter.
-- Evaluation: material (P100 N320 B330 R500 Q900) + piece-square
-  tables + bishop-pair bonus.
-- Search: iterative-deepening alpha-beta with a transposition table,
-  killer moves, history heuristic, MVV-LVA capture ordering,
-  quiescence search (captures/promotions; all evasions when in check),
-  and null-move pruning (R=2, depth >= 3, not in check).
-- Deterministic: fixed node budget (100,000 nodes/move), no wall
-  clock, no unseeded randomness. Repetition and game-history draws
-  handled.
-- `main.py` is an LZMA-compressed payload packed with makefun
-  compress from the golfed source; the unpacked source is the
-  engine above. Total size 3,193 bytes (limit 4,096).
-
-## Local results
-
-- Perft: 18/18 positions correct (startpos, Kiwipete, en-passant,
-  promotion and castling cases, depths 1-3).
-- Mate/evasion tests: mate-in-1 found, check evasions correct.
-- Practice trial-0 (6 games, 1 CPU): 2 wins, 0 draws, 4 losses;
-  estimated practice Elo ~1,100. Beats depth-2 and nodes-250k;
-  loses to depth-3, depth-4, nodes-100k and nodes-500k.
-
-## Files
-
-- `main.py` — the engine (3,193 bytes).
-- `LICENSE` — MIT.
+- trial-0: Elo **1545** — 3 won, 3 drawn, 0 lost, 334 spare plies (700 s)
+- trial-1: Elo **1654** — 5 won, 0 drawn, 1 lost, 458 spare plies (782 s)
+- mean practice Elo: **1599,5** (floor 1154)
